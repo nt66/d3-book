@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>柱形图</title>
+</head>
+
+<body>
+    <p></p>
+</body>
+<script src='../d3/d3.v3.js'></script>
+<script>
+    const dataSet = [50,43,120,87,99,167,142];
+    const padding = {
+        left:20,
+        top:20,
+        bottom:20,
+        left:20,
+    }
+    const width = 400;
+    const height = 100;
+    const svg = d3.select('body')
+                .append('svg')
+                .attr('width',width)
+                .attr('height',height)
+                .attr('transform',`translate(${window.innerWidth/2-200},${window.innerHeight/2-200})`);
+    
+    let linears = d3.scaleLinear()
+                    .domain([0, d3.max(dataSet)])
+                    .range([0,100]);
+        // console.log('50',linears(50))
+
+    let rect = svg.selectAll('rect')
+                  .data(dataSet)
+                  .enter()
+                  .append('rect')
+                  .attr('fill','#000')
+                  .attr('width',30)
+                  .attr('height',(d,i)=>linears(d))
+                  .attr('x',(d,i)=>padding.left+i*35)
+                  .attr('y',function(d,i){
+                      return height-linears(d);
+                  });
+    
+
+    
+
+</script>
+
+</html>
