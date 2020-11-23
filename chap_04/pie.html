@@ -1,15 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pie 图</title>
 </head>
+
 <body>
-    
+
 </body>
 <script src='../d3/d3.v5.js'></script>
 <script>
+    const dataSet = [
+        ['小米', 25],
+        ['三星', 15],
+        ['华为', 30],
+        ['苹果', 15],
+        ['其他', 15],
+    ];
+    const width = 400;
+    const height = 400;
+    const color = ['#222', '#337', '#eee', '#455', '#880']
+    const svg = d3.select('body')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .attr('transform', `translate(${window.innerWidth / 2 - 200},${window.innerHeight / 2 - 200})`)
+        .style('background', 'rgba(0, 0, 0, .4)');
+
+    // 数据转化
+    const pie = d3.pie()
+        .value((d) => d[1])
+    const pieData = pie(dataSet);
+    // console.log('pieData:',pieData);
+    const outerRadious = width / 3;
+    const innerRadious = 0;
+
+    // 设置圆弧
+    const arc = d3.arc()
+        .innerRadius(innerRadious) // 内径
+        .outerRadius(outerRadious); // 外径
+
+    // 计算圆弧组
+    const arcs = svg.selectAll('g')
+        .data(pieData)
+        .enter()
+        .append('g')
+        .attr('transform', `translate(${width / 2},${height / 2})`);
+
+    // 设置圆弧路径
+    arcs.append('path')
+        .attr('fill', (_, i) => color[i])
+        .attr('d', d => arc(d));
     
+    console.log('arcs',arcs);
+    // 设置圆弧文字
+    arcs.append('text')
+        .attr('transform',d=>{
+            const x = arc.centroid(d)[0]*1.4
+            const y = arc.centroid(d)[1]*1.4
+            return `translate(${x},${y})`
+        })
+        .data(dataSet)
+        .attr('text-anchor','middle')
+        .text(d=>`${d[1]}%`);
+
+
 </script>
+
 </html>
