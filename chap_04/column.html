@@ -13,46 +13,38 @@
 <script src='../d3/d3.v5.js'></script>
 <script>
     const dataSet = [50,43,120,87,99,167,142];
+    const width = 400;
+    const height = 200;
     const padding = {
         left:20,
         top:20,
         bottom:25,
         left:20,
     }
-    const width = 400;
-    const height = 200;
+    
+    // 新建svg
     const svg = d3.select('body')
                 .append('svg')
                 .attr('width',width)
                 .attr('height',height)
                 .attr('transform',`translate(${window.innerWidth/2-200},${window.innerHeight/2-200})`);
     
+    // 纵坐标比例尺
     let hscale = d3.scaleLinear()
                     .domain([0,200])
                     .range([200,0]);
 
+    // 横坐标比例尺
     let xscale = d3.scaleLinear()
                     .domain([0,dataSet.length])
                     .range([0,400]);
-
-
-    let rect = svg.selectAll('rect')
-                  .data(dataSet)
-                  .enter()
-                  .append('rect')
-                  .attr('fill','#000')
-                  .attr('width',30)
-                  .attr('height',(d,i)=>hscale(d))
-                  .attr('x',(d,i)=>padding.left+i*35)
-                  .attr('y',function(d,i){
-                      return height-hscale(d)-padding.bottom;
-                  });
     
+    // 横坐标
     let xAxis = d3.axisBottom()
                 .scale(xscale)
                 .ticks(dataSet.length)
                 // .tickValues(d3.range(dataSet.length));
-    
+    // 纵坐标
     let yAxis = d3.axisLeft()
                 .scale(hscale)
                 .ticks(10);
@@ -64,12 +56,19 @@
     svg.append('g')
         .attr('transform', 'translate(20, -10)')
         .call(yAxis);
-    
 
-    
-
-    
-
+    // 柱状图
+    let rect = svg.selectAll('rect')
+                  .data(dataSet)
+                  .enter()
+                  .append('rect')
+                  .attr('fill','#000')
+                  .attr('width',30)
+                  .attr('height',(d,i)=>hscale(d))
+                  .attr('x',(d,i)=>padding.left+i*35)
+                  .attr('y',function(d,i){
+                      return height-hscale(d)-padding.bottom;
+                  });
 </script>
 
 </html>
