@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>椭圆</title>
+</head>
+<body>
+    
+</body>
+<script src='../d3/d3.v5.js'></script>
+<script>
+    const width = 400;
+    const height = 400;
+    const svg = d3.select('body')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .attr('transform', `translate(${window.innerWidth / 2 - 200},${window.innerHeight / 2 - 200})`)
+        .style('background', 'rgba(0, 0, 0, .4)');
+    
+    const ellipse = svg.append("ellipse")
+            .attr("cx", 200)
+            .attr("cy", 50)
+            .attr("rx", 100)
+            .attr("ry", 50)
+            .attr('fill','rgba(0, 0, 0, .4)')
+            .attr("stroke", "#eee")
+            .attr('stroke-width', 3)
+            .attr('transform','translate(0,150)')
+    console.log(ellipse)
+</script>
+</html>
