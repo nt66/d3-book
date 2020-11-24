@@ -37,12 +37,12 @@
     const outerRadious = width / 3;
     const innerRadious = 0;
 
-    // 设置圆弧
+    // 设置圆弧（设置圆弧路径）
     const arc = d3.arc()
         .innerRadius(innerRadious) // 内径
         .outerRadius(outerRadious); // 外径
 
-    // 计算圆弧组
+    // 计算圆弧组（带数据的组对象）
     const arcs = svg.selectAll('g')
         .data(pieData)
         .enter()
