@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画示例</title>
+</head>
+<body>
+</body>
+    <script src='../d3/d3.v5.js'></script>
+    <script>
+        const width = 400;
+        const height = 400;
+        // 新建svg
+        const svg = d3.select('body')
+            .append('svg')
+            .attr('width',width)
+            .attr('height',height)
+            .attr('transform',`translate(${window.innerWidth/2-200},${window.innerHeight/2-200})`);
+    </script>
+</html>
