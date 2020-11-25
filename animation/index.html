@@ -9,13 +9,101 @@
 </body>
     <script src='../d3/d3.v5.js'></script>
     <script>
-        const width = 400;
-        const height = 400;
+        const width = 800;
+        const height = 800;
         // 新建svg
         const svg = d3.select('body')
             .append('svg')
             .attr('width',width)
             .attr('height',height)
             .attr('transform',`translate(${window.innerWidth/2-200},${window.innerHeight/2-200})`);
+
+        // 过渡动画 width 从0 到300
+        svg.append('rect')
+           .attr('fill','steelblue')
+           .attr('x',10)
+           .attr('y',10)
+           .attr('width',0)
+           .attr('height',30)
+           .transition()
+           .delay(500)
+           .duration(1000) 
+           .ease(d3.easeCubic) // 加速效果
+           .attr('width',300);
+        
+        // setInterval 循环动画
+        setInterval(draw, 1500);
+        function draw(){
+           var rect2 =  svg.append('rect')
+           .attr('fill','steelblue')
+           .attr('x',10)
+           .attr('y',100)
+           .attr('width',0)
+           .attr('height',30)
+           .transition()
+           .delay(500)
+           .duration(1000) 
+           .ease(d3.easeCubic) // 加速效果
+           .attr('width',300)
+           .remove();
+        }
+
+        // 月球绕地动画
+        const c1 =  svg.append('circle')
+                     .attr('r',56)
+                     .attr('fill','#fff')
+                     .attr('stroke','#46D233')
+                     .attr('stroke-width', 1)
+                     .attr('cx', 200)
+                     .attr('cy', 200);
+
+        let moon = svg.append('g')
+                    .attr('class', 'top_moon')
+                    .attr('transform', `translate(200, 200)`)
+                    .append('circle')
+                    .attr('r',6)
+                    .attr('fill', '#46D2F4')
+                    .attr('stroke', '#46D233')
+                    .attr('stroke-width', 1)
+                    .attr('cx', 40) // 控制环绕半径
+                    .attr('cy', 40); // 控制环绕半径
+                    
+        const t0 = Date.now();
+        d3.timer(()=>{
+            const t1 = Date.now();
+            const delay = t1 - t0;
+            moon.attr('transform', ()=> {
+                return 'rotate(' + 60 + (delay * 50) / 300 + ')';
+            });
+        })
+
+    // 飞线(animateMotion路径动画)
+    const sy = 50;
+    const ex = 250;
+    for (let j = 0; j < 30; j += 1) {
+      const circle = svg.append('circle');
+      circle
+        .transition()
+        .attr('cx', 10)
+        .attr('cy', 300)
+        .attr('r', 2 - j * 0.04)
+        .attr('fill', '#46D2F4')
+        .attr('opacity', 1 - j * (1 / 30));
+
+      circle
+        .append('animateMotion')
+        .attr(
+          'path',
+          `M${10} ${300}
+            L${800} ${300}`
+        )
+        .attr('begin', `${0.1 + j / 80}s`)
+        .attr('dur', '6s')
+        .attr('rotate', 'auto')
+        .attr('ease', 'linear')
+        .attr('repeatCount', 'indefinite');
+    }
+       
+        
     </script>
 </html>
